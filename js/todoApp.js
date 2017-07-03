@@ -14,11 +14,15 @@
 
 		this.todo = keet().link('todo', '{{todoapp}}{{info}}');
 
-		this.todoapp = keet().template('section', 'todoapp').set('{{header}}{{main}}{{footer}}');
+		this.todoapp = keet().template('section', 'todoapp')
+			.set('{{header}}{{main}}{{footer}}');
 
 		this.header = keet()
 			.template('header', 'header')
-			.set(cat('<h1>todos</h1>', '<input id="new-todo" placeholder="What needs to be done?" autofocus>'));
+			.set(cat(
+					'<h1>todos</h1>', 
+					'<input id="new-todo" placeholder="What needs to be done?" autofocus>'
+				));
 
 		this.info = keet().template('footer', 'info')
 			.set(cat(
@@ -28,15 +32,10 @@
 			));
 
 		this.main = keet().template('section', 'main')
-			.set({
-				value: cat(
-					'<input k-click="completeAll()" id="toggle-all" type="checkbox">', 
-					'<label for="toggle-all">Mark all as complete</label>',
-					' ',
-					'{{todoList}}'
-				),
-				'css-display': App.base.hasData
-			}).watchObj(App.base, 'css-display', 'hasData');
+			.watchDistict(App.base);
+
+		this.toggleAll = keet().template('input', 'toggle-all')
+			.watchDistict(App.toggle);
 
 		this.completeAll = function () {
 			App.checkedAll(this.checked);
@@ -56,10 +55,8 @@
 					'<input class="edit" value="{{title}}">',
 				'</li>')).watch();
 
-		this.footer = keet().template('footer', 'footer').set({
-			value: '{{todoCount}}{{filters}}{{clearCompleted}}',
-			'css-display': App.length.hasData
-		}).watchObj(App.length, 'css-display', 'hasData');
+		this.footer = keet().template('footer', 'footer')
+			.watchDistict(App.length);
 
 		this.destroy = function (evt, id) {
 			App.destroy(id);
@@ -73,27 +70,31 @@
 			App.updateFilter(uri);
 		};
 
-		this.todoCount = keet().template('span', 'todo-count').set(App.updateCount()).watchObj(App.count, function () {
-			this.set(App.updateCount());
-		});
+		this.todoCount = keet().template('span', 'todo-count')
+			.watchDistict(App.count);
 
 		this.filters = keet().template('ul', 'filters')
-			.array(App.filters, '<li k-click="updateUrl({{hash}})"><a class="{{className}}" href="{{hash}}">{{nodeValue}}</a></li>').watch();
+			.array(App.filters, cat(
+				'<li k-click="updateUrl({{hash}})">',
+					'<a class="{{className}}" href="{{hash}}">{{nodeValue}}</a>',
+				'</li>'
+			)).watch();
 
-		this.clearCompleted = keet().template('button', 'clear-completed').set({
-			value: 'Clear completed',
-			'css-display': App.complete.hasCompleted
-		}).watchObj(App.complete, 'css-display', 'hasCompleted');
+		this.clearCompleted = keet().template('button', 'clear-completed')
+			.watchDistict(App.complete);
 
 		this.todo.compose(function () {
 			self.todoapp.compose(function () {
-				self.header.bindListener('new-todo', App.create).bindListener('new-todo', App.create.bind(App), 'keydown');
+				self.header
+					.bindListener('new-todo', App.create)
+					.bindListener('new-todo', App.create.bind(App), 'keydown');
 				self.main.compose();
 				App.updateCheckAll();
 				App.checkedAll(null, true);
 			});
 			self.footer.compose(function () {
-				self.clearCompleted.bindListener('clear-completed', App.clearCompleted.bind(App), 'click');
+				self.clearCompleted
+					.bindListener('clear-completed', App.clearCompleted.bind(App), 'click');
 			});
 
 			App.renderFooter();

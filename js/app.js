@@ -4,7 +4,7 @@
 	'use strict';
 
 	var App = {
-		init: function init() {
+		init: function() {
 			this.todos = util.store('todos-keetjs');
 			var filters = ['all', 'active', 'completed'];
 			this.filters = filters.map(function (f) {
@@ -15,42 +15,54 @@
 				};
 			});
 
-			this.complete = {};
+			this.complete = {
+				value: 'Clear completed'
+			};
 			this.count = {};
-			this.length = {};
-			this.base = {};
+			this.length = {
+				value: '{{todoCount}}{{filters}}{{clearCompleted}}'
+			};
+			this.base = {
+				value: '{{toggleAll}}<label for="toggle-all">Mark all as complete</label>{{todoList}}'
+			};
+			this.toggle = {
+				'attr-k-click': 'completeAll()',
+				'attr-type': 'checkbox',
+				'css-display': 'none',
+				'el-checked': false
+			}
 
 			this.getActive();
 			this.getCompleted();
 			new todoApp(this);
 		},
-		filterTodos: function filterTodos(prop, compare, notEqual) {
+		filterTodos: function(prop, compare, notEqual) {
 			return this.todos.filter(function (f) {
 				return notEqual ? f[prop] !== compare : f[prop] === compare;
 			});
 		},
-		getIndex: function getIndex(id, cb) {
+		getIndex: function(id, cb) {
 			var idx = this.todos.map(function (f) {
 				return f.id;
 			}).indexOf(id);
 			if (~idx) cb(idx);
 		},
-		getActive: function getActive() {
+		getActive: function() {
 			var actives = this.filterTodos('completed', 'completed', true);
 
-			this.count.total = actives.length;
-			this.length.hasData = this.todos.length ? 'block' : 'none';
-			this.base.hasData = this.todos.length ? 'block' : 'none';
+			this.count['value'] = this.updateCount(actives.length);
+			this.length['css-display'] = this.todos.length ? 'block' : 'none';
+			this.base['css-display'] = this.todos.length ? 'block' : 'none';
 			return actives;
 		},
-		getCompleted: function getCompleted() {
+		getCompleted: function() {
 			var completed = this.filterTodos('completed', 'completed');
 
-			this.complete.hasCompleted = completed.length ? 'block' : 'none';
+			this.complete['css-display'] = completed.length ? 'block' : 'none';
 			return completed;
 		},
 
-		renderFooter: function renderFooter() {
+		renderFooter: function() {
 			var self = this;
 			if (window.location.hash !== '') {
 				this.updateFilter(window.location.hash);
@@ -63,7 +75,7 @@
 				self.updateFilter(window.location.hash);
 			};
 		},
-		updateFilter: function updateFilter(hash) {
+		updateFilter: function(hash) {
 			var self = this;
 			this.filters.map(function (f, i, r) {
 				f.className = f.hash === hash ? 'selected' : '';
@@ -72,7 +84,7 @@
 			});
 			this.updatePage();
 		},
-		updatePage: function updatePage() {
+		updatePage: function() {
 			var self = this;
 			this.todos.map(function (f, i, r) {
 				if (self.page === 'Active' && f.completed === 'completed') f.display = 'none';
@@ -84,10 +96,10 @@
 			this.updateCheckAll();
 			this.focus();
 		},
-		updateCount: function updateCount() {
-			return util.cat('<strong>', this.count.total, '</strong> ', this.count.total === 1 ? 'item' : 'items', ' left');
+		updateCount: function(count) {
+			return util.cat('<strong>', count, '</strong> ', count === 1 ? 'item' : 'items', ' left');
 		},
-		create: function create(e, evt) {
+		create: function(e, evt) {
 			var value = e.trim();
 
 			if (evt.which === 13) {
@@ -107,11 +119,11 @@
 				this.focus();
 			}
 		},
-		editTodos: function editTodos(id, ele) {
-			var self = this,
-			    val,
-			    input,
-			    isEsc;
+		editTodos: function(id, ele) {
+			var self = this
+			,	val
+			,	input
+			,	isEsc;
 			ele.classList.add('editing');
 			input = ele.querySelector('.edit');
 			val = input.value;
@@ -153,7 +165,7 @@
 				}
 			};
 		},
-		todoCheck: function todoCheck(id) {
+		todoCheck: function(id) {
 			var self = this;
 			this.getIndex(id, function (idx) {
 				var changed = self.todos[idx];
@@ -168,16 +180,17 @@
 
 			this.focus();
 		},
-		destroy: function destroy(id) {
+		destroy: function(id) {
 			var self = this;
 			this.getIndex(id, function (idx) {
 				self.todos.splice(idx, 1);
 			});
 			util.store('todos-keetjs', this.todos);
+			this.getActive();
 			this.updateCheckAll();
 			this.focus();
 		},
-		clearCompleted: function clearCompleted() {
+		clearCompleted: function() {
 			var len = this.todos.length;
 			while (len--) {
 				var idx = this.todos.map(function (f, i) {
@@ -191,36 +204,26 @@
 			this.updateCheckAll();
 			this.focus();
 		},
-		focus: function focus() {
+		focus: function() {
 			document.getElementById('new-todo').focus();
 		},
-		updateCheckAll: function updateCheckAll() {
-			var page = this.page,
-			    hasTodo = this.todos.length ? true : false,
-			    isAllCompleted = this.todos.length === this.getCompleted().length ? true : false,
-			    isAllNotCompleted = this.todos.length === this.getActive().length ? true : false,
-			    hasSomeCompleted = this.todos.some(function (f) {
-				return f.completed === 'completed';
-			}),
-			    i;
-			if (page === 'All') i = hasTodo ? isAllCompleted ? 2 : 1 : 0;
-			else if (page === 'Active') i = hasTodo ? isAllCompleted ? 0 : 1 : 0;
-			else if (page === 'Completed') i = hasTodo && isAllNotCompleted ? 0 : hasTodo && isAllCompleted ? 2 : hasTodo && hasSomeCompleted ? 1 : 0;
-			this.updateCheckInput(i);
+		updateCheckAll: function() {
+			this.toggle['css-display'] = this.todos.length ? 'block' : 'none';
+			this.page === 'All' ? this.updateCheckPageAll() : this.page === 'Active' ? this.updateCheckPageActive() : this.updateCheckPageCompleted();
 		},
-		updateCheckInput: function updateCheckInput(i) {
-			var e = document.getElementById('toggle-all');
-			if (i == 1) {
-				e.style.display = 'block';
-				e.checked = false;
-			} else if (i == 2) {
-				e.style.display = 'block';
-				e.checked = true;
-			} else {
-				e.style.display = 'none';
-			}
+		updateCheckPageAll: function() {
+			this.toggle['el-checked'] = this.todos.length === this.getCompleted().length ? true : false;
 		},
-		checkedAll: function checkedAll(state, initial) {
+		updateCheckPageActive: function() {
+			this.todos.length === this.getCompleted().length ?  this.toggle['css-display'] = 'none' : this.toggle['el-checked'] = false;
+		},
+		updateCheckPageCompleted: function() {
+			if(this.todos.length) {
+				this.toggle['css-display'] = this.todos.length === this.getActive().length ? 'none' : 'block';
+				this.toggle['el-checked'] = this.todos.length === this.getCompleted().length ? true : false;
+			};
+		},
+		checkedAll: function(state, initial) {
 			var self = this;
 			this.todos.forEach(function (f) {
 				var e = document.querySelector(util.cat('[data-id="', f.id, '"]'));
