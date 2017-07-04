@@ -32,13 +32,13 @@
 			));
 
 		this.main = keet().template('section', 'main')
-			.watchDistict(App.base);
+			.watchDistict(App.base, '{{toggleAll}}<label for="toggle-all">Mark all as complete</label>{{todoList}}');
 
 		this.toggleAll = keet().template('input', 'toggle-all')
 			.watchDistict(App.toggle);
 
 		this.completeAll = function () {
-			App.checkedAll(this.checked);
+			App.checkedAll(self.todoList, this.checked);
 		};
 
 		this.editMode = function (evt, id) {
@@ -56,7 +56,7 @@
 				'</li>')).watch();
 
 		this.footer = keet().template('footer', 'footer')
-			.watchDistict(App.length);
+			.watchDistict(App.length, '{{todoCount}}{{filters}}{{clearCompleted}}');
 
 		this.destroy = function (evt, id) {
 			App.destroy(id);
@@ -81,7 +81,7 @@
 			)).watch();
 
 		this.clearCompleted = keet().template('button', 'clear-completed')
-			.watchDistict(App.complete);
+			.watchDistict(App.complete, 'Clear completed');
 
 		this.todo.compose(function () {
 			self.todoapp.compose(function () {
@@ -90,7 +90,7 @@
 					.bindListener('new-todo', App.create.bind(App), 'keydown');
 				self.main.compose();
 				App.updateCheckAll();
-				App.checkedAll(null, true);
+				App.checkedAll(self.todoList, null, true);
 			});
 			self.footer.compose(function () {
 				self.clearCompleted

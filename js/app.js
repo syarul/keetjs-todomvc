@@ -15,22 +15,14 @@
 				};
 			});
 
-			this.complete = {
-				value: 'Clear completed'
-			};
-			this.count = {};
-			this.length = {
-				value: '{{todoCount}}{{filters}}{{clearCompleted}}'
-			};
-			this.base = {
-				value: '{{toggleAll}}<label for="toggle-all">Mark all as complete</label>{{todoList}}'
-			};
-			this.toggle = {
-				'attr-k-click': 'completeAll()',
-				'attr-type': 'checkbox',
-				'css-display': 'none',
-				'el-checked': false
-			}
+			var props = ['complete', 'count', 'length', 'base', 'toggle'];
+
+			util.genObj.apply(this, props);
+
+			this.toggle['attr-k-click'] = 'completeAll()'
+			this.toggle['attr-type'] = 'checkbox'
+			this.toggle['css-display'] = 'none'
+			this.toggle['el-checked'] = false
 
 			this.getActive();
 			this.getCompleted();
@@ -223,15 +215,11 @@
 				this.toggle['el-checked'] = this.todos.length === this.getCompleted().length ? true : false;
 			};
 		},
-		checkedAll: function(state, initial) {
-			var self = this;
-			this.todos.forEach(function (f) {
-				var e = document.querySelector(util.cat('[data-id="', f.id, '"]'));
-				var input = e.getElementsByClassName('toggle')[0];
-
-				if (!initial && state && f.completed !== 'completed') input.click();
-				else if (!initial && !state && f.completed === 'completed') input.click();
-				else if (initial && f.completed === 'completed' && !input.checked) input.checked = true;
+		checkedAll: function(todoList, state, initial) {
+			this.todos.forEach(function (f, i) {
+				if (!initial && state && f.completed !== 'completed') todoList.evented(i, 'class', 'toggle', { click: true });
+				else if (!initial && !state && f.completed === 'completed') todoList.evented(i, 'class', 'toggle', { click: true });
+				else if (initial && f.completed === 'completed') todoList.evented(i, 'class', 'toggle', { checked: true });
 			});
 			this.focus();
 		}
