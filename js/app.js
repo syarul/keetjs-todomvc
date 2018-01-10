@@ -3,6 +3,10 @@
 (function () {
 	'use strict';
 
+	var log = console.log.bind(console)
+
+	var TODO_APP;
+
 	var App = {
 		init: function() {
 			this.todos = util.store('todos-keetjs');
@@ -24,9 +28,13 @@
 			this.toggle['css-display'] = 'none'
 			this.toggle['el-checked'] = false
 
+			TODO_APP = new todoApp(this);
+
+			log(TODO_APP)
+
 			this.getActive();
 			this.getCompleted();
-			new todoApp(this);
+
 		},
 		filterTodos: function(prop, compare, notEqual) {
 			return this.todos.filter(function (f) {
@@ -42,9 +50,16 @@
 		getActive: function() {
 			var actives = this.filterTodos('completed', 'completed', true);
 
-			this.count['value'] = this.updateCount(actives.length);
-			this.length['css-display'] = this.todos.length ? 'block' : 'none';
-			this.base['css-display'] = this.todos.length ? 'block' : 'none';
+			// this.count['value'] = this.updateCount(actives.length);
+			TODO_APP.footer.contentUpdate('todoCount', this.updateCount(actives.length))
+
+			//this.length['css-display'] = this.todos.length ? 'block' : 'none';
+			TODO_APP.container.toggle('footer', this.todos.length ? 'block' : 'none')
+
+			// this.base['css-display'] = this.todos.length ? 'block' : 'none';
+			TODO_APP.main.toggle('toggleAll', this.todos.length ? 'block' : 'none')
+			TODO_APP.container.toggle('main', this.todos.length ? 'block' : 'none')
+
 			return actives;
 		},
 		getCompleted: function() {
@@ -82,7 +97,7 @@
 				if (self.page === 'Active' && f.completed === 'completed') f.display = 'none';
 				else if (self.page === 'Completed' && f.completed !== 'completed') f.display = 'none';
 				else f.display = 'block';
-				r.assign(i, f);
+				r.update(i, f);
 			});
 			util.store('todos-keetjs', this.todos);
 			this.updateCheckAll();
@@ -91,8 +106,8 @@
 		updateCount: function(count) {
 			return util.cat('<strong>', count, '</strong> ', count === 1 ? 'item' : 'items', ' left');
 		},
-		create: function(e, evt) {
-			var value = e.trim();
+		create: function(evt) {
+			var value = evt.target.value.trim();
 
 			if (evt.which === 13) {
 				this.todos.push({
@@ -183,6 +198,8 @@
 			this.focus();
 		},
 		clearCompleted: function() {
+			log('clear!!')
+			return
 			var len = this.todos.length;
 			while (len--) {
 				var idx = this.todos.map(function (f, i) {
@@ -200,14 +217,18 @@
 			document.getElementById('new-todo').focus();
 		},
 		updateCheckAll: function() {
-			this.toggle['css-display'] = this.todos.length ? 'block' : 'none';
+			// this.toggle['css-display'] = this.todos.length ? 'block' : 'none';
+			TODO_APP.main.toggle('toggleAll', this.todos.length ? 'block' : 'none')
+
 			this.page === 'All' ? this.updateCheckPageAll() : this.page === 'Active' ? this.updateCheckPageActive() : this.updateCheckPageCompleted();
 		},
 		updateCheckPageAll: function() {
-			this.toggle['el-checked'] = this.todos.length === this.getCompleted().length ? true : false;
+			// this.toggle['el-checked'] = this.todos.length === this.getCompleted().length ? true : false;
+			TODO_APP.main.setAttr('toggleAll', 'checked', this.todos.length === this.getCompleted().length ? true : false)
 		},
 		updateCheckPageActive: function() {
-			this.todos.length === this.getCompleted().length ?  this.toggle['css-display'] = 'none' : this.toggle['el-checked'] = false;
+			// this.todos.length === this.getCompleted().length ?  this.toggle['css-display'] = 'none' : this.toggle['el-checked'] = false;
+			this.todos.length === this.getCompleted().length ? TODO_APP.main.toggle('toggleAll', 'none') : TODO_APP.main.setAttr('toggleAll', 'checked', false)
 		},
 		updateCheckPageCompleted: function() {
 			if(this.todos.length) {
