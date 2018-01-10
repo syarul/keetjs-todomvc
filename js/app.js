@@ -87,7 +87,7 @@
 			this.filters.map(function (f, i, r) {
 				f.className = f.hash === hash ? 'selected' : '';
 				if (f.className === 'selected') self.page = f.nodeValue;
-				r.assign(i, f);
+				r.update(i, f);
 			});
 			this.updatePage();
 		},
@@ -177,7 +177,7 @@
 			this.getIndex(id, function (idx) {
 				var changed = self.todos[idx];
 				changed.completed = changed.completed === '' ? 'completed' : '';
-				self.todos.assign(idx, changed);
+				self.todos.update(idx, changed);
 				util.store('todos-keetjs', self.todos);
 				self.getActive();
 				self.updatePage();

@@ -42,12 +42,15 @@
 				list: App.todos,
 				editMode: function(id){
 					log('editMode', id)
+					App.editTodos(id, this);
 				},
 				destroy: function(id){
 					log('destroy', id)
+					App.destroy(id);
 				},
 				completeTodo: function(id){
 					log('completeTodo', id)
+					App.todoCheck(id);
 				}
 			}).link('todo-list')
 		}
@@ -86,8 +89,11 @@
 						'<a class="{{className}}" href="{{hash}}">{{nodeValue}}</a>',
 					'</li>'
 				),
-				list: App.filters
-			})
+				list: App.filters,
+				updateUrl: function (uri) {
+					App.updateFilter(uri)
+				}
+			}).link('filters')
 		}
 
 		var footerCluster = function(){
@@ -148,11 +154,13 @@
 
 		this.todoapp.mount(todo).link('todo').cluster(containerCluster)
 
-		// log(this)
+		setTimeout(() => {
+			App.updateCheckAll()
+			App.checkedAll(self.todoList, null, true)
+			App.renderFooter()
+		}, 0)
 
 	}
-
-	// var header = new Keet().mount({ template: '{{todoapp}}{{info}}' }).link('todo')
 
 	exports._todoApp = function (App) {
 
