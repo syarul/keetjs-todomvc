@@ -19,13 +19,23 @@
 			info: {
 				tag: 'footer',
 				id: 'info',
-				template: cat('<p>Double-click to edit a todo</p>', '<p>Created by <a href="https://github.com/syarul">Shahrul Nizam Selamat</a></p>', '<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>')
+				template: cat(
+					'<p>Double-click to edit a todo</p>', 
+					'<p>Created by <a href="https://github.com/syarul">Shahrul Nizam Selamat</a></p>', 
+					'<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>')
 			}
 		};
 
 		var todoListCluster = function todoListCluster() {
 			self.todoList = new Keet().mount({
-				template: cat('<li k-dblclick="editMode({{id}})" class="{{completed}}" data-id="{{id}}" style="display:{{display}}">', '<div class="view">', '<input k-click="completeTodo({{id}})" class="toggle" type="checkbox" {{checked}}>', '<label>{{title}}</label>', '<button k-click="destroy({{id}})" class="destroy"></button>', '</div>', '<input class="edit" value="{{title}}">', '</li>'),
+				template: cat(
+					'<li k-dblclick="editMode({{id}})" class="{{completed}}" data-id="{{id}}" style="display:{{display}}">', 
+						'<div class="view">', 
+							'<input k-click="completeTodo({{id}})" class="toggle" type="checkbox" {{checked}}>', 
+							'<label>{{title}}</label>', '<button k-click="destroy({{id}})" class="destroy"></button>', 
+						'</div>', 
+						'<input class="edit" value="{{title}}">', 
+					'</li>'),
 				list: App.todos,
 				editMode: function editMode(id) {
 					App.editTodos(id, this);
@@ -68,7 +78,10 @@
 
 		var filtersCluster = function filtersCluster() {
 			self.filters = new Keet().mount({
-				template: cat('<li k-click="updateUrl({{hash}})">', '<a class="{{className}}" href="{{hash}}">{{nodeValue}}</a>', '</li>'),
+				template: cat(
+					'<li k-click="updateUrl({{hash}})">', 
+						'<a class="{{className}}" href="{{hash}}">{{nodeValue}}</a>', 
+					'</li>'),
 				list: App.filters,
 				updateUrl: function updateUrl(uri) {
 					App.updateFilter(uri);
@@ -122,7 +135,9 @@
 				header: {
 					tag: 'header',
 					id: 'header',
-					template: cat('<h1>todos</h1>', '<input id="new-todo" k-keydown="create()" placeholder="What needs to be done?" autofocus>')
+					template: cat(
+						'<h1>todos</h1>', 
+						'<input id="new-todo" k-keydown="create()" placeholder="What needs to be done?" autofocus>')
 				},
 				main: {
 					tag: 'section',

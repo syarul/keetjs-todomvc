@@ -79,7 +79,9 @@
 		updatePage: function updatePage() {
 			var self = this;
 			this.todos.map(function (f, i, r) {
-				if (self.page === 'Active' && f.completed === 'completed') f.display = 'none';else if (self.page === 'Completed' && f.completed !== 'completed') f.display = 'none';else f.display = 'block';
+				if (self.page === 'Active' && f.completed === 'completed') f.display = 'none';
+				else if (self.page === 'Completed' && f.completed !== 'completed') f.display = 'none';
+				else f.display = 'block';
 				if (f.completed === 'completed') f.checked = 'checked';else f.checked = '';
 				r.update(i, f);
 			});
@@ -196,13 +198,17 @@
 		},
 		updateCheckAll: function updateCheckAll() {
 			TODO_APP.main.toggle('toggleAll', this.todos.length ? 'block' : 'none');
-			this.page === 'All' ? this.updateCheckPageAll() : this.page === 'Active' ? this.updateCheckPageActive() : this.updateCheckPageCompleted();
+			this.page === 'All' ? this.updateCheckPageAll() : this.page === 'Active' ? 
+				this.updateCheckPageActive() : 
+				this.updateCheckPageCompleted();
 		},
 		updateCheckPageAll: function updateCheckPageAll() {
 			TODO_APP.main.setAttr('toggleAll', 'checked', this.todos.length === this.getCompleted().length ? true : false);
 		},
 		updateCheckPageActive: function updateCheckPageActive() {
-			this.todos.length === this.getCompleted().length ? TODO_APP.main.toggle('toggleAll', 'none') : TODO_APP.main.setAttr('toggleAll', 'checked', '');
+			this.todos.length === this.getCompleted().length ? 
+				TODO_APP.main.toggle('toggleAll', 'none') : 
+				TODO_APP.main.setAttr('toggleAll', 'checked', '');
 		},
 		updateCheckPageCompleted: function updateCheckPageCompleted() {
 			if (this.todos.length) {
