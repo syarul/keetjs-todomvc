@@ -1,4 +1,4 @@
-import Keet, { html } from 'keet'
+import Keet, { html } from '../../keet'
 import filterApp from './filter'
 import todoList from './todo'
 

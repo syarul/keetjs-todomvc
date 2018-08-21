@@ -1,4 +1,4 @@
-import { createModel } from 'keet'
+import { createModel } from '../../keet'
 
 class CreateModel extends createModel {
   clearCompleted () {
