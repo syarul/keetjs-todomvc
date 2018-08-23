@@ -1,14 +1,7 @@
 # Keet.js TodoMVC Example
 
-> Keet.js is a lightweight view layer for the web, which take simplistic approach to handle data and DOM manipulation
-
-## TodoMVC Performance Benchmark
-
-<img src="img/2018-18-08.png" width="583">
-
-_(Results for Chrome v64 on Window 7 Custom PC)_
-
-> No write to localStorage for keet, mercury, preact and mithril. Result varied on multiple test
+Minimalist view layer for the web. For more info visit 
+https://github.com/syarul/keet
 
 ## Setup
 
@@ -20,6 +13,22 @@ To build and view the mvc
 
 ```npm run build```
 
+## TodoMVC Performance Benchmark
+
+> Opinionated, the benchmark test suite: [link](https://github.com/syarul/preact-perf#master)
+
+Result vs Preact, Vue, Mithril and Mercury
+
+<img src="img/2018-24-08.jpg" width="400">
+
+It's about +/- 20x vs React and +/- 40x vs Angular
+
+<img src="img/2018-24-08-vs-react-angular.jpg" width="400">
+
+_( Results from Chrome v64 on Window 7 - AMD FX6100 - Radeon HD 7900 - )_
+
+> 1000 Todos, all test without write to localStorage. Result varied across multiple test
+
 ## Test Unit
 
 To run the todomvc test you need to copy this into the ```example``` tree folder of the offical todomvc at [github](https://github.com/tastejs/todomvc)
@@ -30,4 +39,4 @@ Name the folder into ```keetjs```, and follow the guide on how to setup the test
 
 The [Keet.js at Github](https://github.com/syarul/keet) is a great resource for getting started.
 
-_This TodoMVC is not the recommended way of building application with Keet.js._
+_This TodoMVC is may serve as as a way of building application with Keet.js._
