@@ -78,7 +78,7 @@ class App extends Keet {
 const todoList = new App()
 
 todoList.mount(html`
-  <ul id="todo-list" class="todo-list" k-click="evtTodo()" k-dblclick="editTodo()" k-keydown="keyTodo()" k-blur="blurTodo(useCapture)" >
+  <ul id="todo-list" class="todo-list" k-click="evtTodo()" k-dblclick="editTodo()" k-keydown="keyTodo()" k-blur="blurTodo(useCapture)">
     <!-- {{model:todoModel}} -->
       <li class="{{this.activeClass}}">
         <div class="view">

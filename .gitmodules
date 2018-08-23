@@ -1,4 +1,4 @@
 [submodule "keet"]
 	path = keet
 	url = https://github.com/syarul/keet
-	branch = esm-5
+	branch = diff

@@ -12,7 +12,10 @@ class App extends Keet {
     }
   }
   componentDidMount () {
-    this.updateUrl(window.location.hash)
+    this.filterModel.switch(window.location.hash, { selected: true })
+    if (window.location.hash !== '#/all') {
+      todoList.filterTodo(window.location.hash)
+    }
     window.onpopstate = () => this.updateUrl(window.location.hash)
   }
   updateUrl (hash) {
@@ -26,7 +29,7 @@ const filterApp = new App()
 filterApp.mount(html`
   <ul id="filters" class="filters">
     <!-- {{model:filterModel}} -->
-    <li id="{{name}}" k-click="updateUrl({{hash}})"><a class="{{selected?selected:''}}" href="{{hash}}">{{name}}</a></li>
+    <li id="{{name}}" k-click="updateUrl()"><a class="{{selected?selected:''}}" href="{{hash}}">{{name}}</a></li>
     <!-- {{/model:filterModel}} -->
   </ul>`)
 

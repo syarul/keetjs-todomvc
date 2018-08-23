@@ -4,8 +4,9 @@
     "start": "webpack-dev-server -d",
     "build": "npm run build:rollup",
     "build:rollup": "rm -rf build && mkdirp build/todomvc-common && cp src/index.html build/index.html && cp learn.json build/learn.json && rollup -c rollup.config.js && cp node_modules/todomvc-common/base.* build/todomvc-common/ && cp node_modules/todomvc-app-css/index.css build/todomvc.css",
-    "postbuild": "uglifyjs build/app.js --pure-funcs classCallCheck -c unsafe,collapse_vars,evaluate,screw_ie8,loops,keep_fargs=false,pure_getters,unused,dead_code -m -o build/app.js -p relative --in-source-map build/app.js.map --source-map build/app.js.map && opener ./build/index.html",
-    "lint": "standard src/**/*.js --fix"
+    "postbuild": "uglifyjs build/app.js --pure-funcs classCallCheck -c unsafe,collapse_vars,evaluate,screw_ie8,loops,keep_fargs=false,pure_getters,unused,dead_code -m -o build/app.js -p relative --in-source-map build/app.js.map --source-map build/app.js.map",
+    "lint": "standard src/**/*.js --fix",
+    "open": "opener ./build/index.html"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
