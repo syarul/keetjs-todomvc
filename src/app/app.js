@@ -1,8 +1,10 @@
 import Keet, { html } from '../../keet'
 import filterApp from './filter'
 import todoList from './todo'
+import { store } from './util'
 
 const ENTER_KEY = 13
+const STORE_KEY = 'keetjs'
 
 class App extends Keet {
   todoList = todoList
@@ -25,11 +27,16 @@ class App extends Keet {
     })
   }
 
+  componentDidMount () {
+    const data = store(STORE_KEY)
+    data.map(obj => this.todoList.todoModel.add(obj))
+  }
+
   create (e) {
     if (e.keyCode !== ENTER_KEY) return
     let title = e.target.value.trim()
     if (title) {
-      this.todoList.addTodo({ title, completed: false })
+      this.todoList.addTodo({ title, completed: false, editing: false })
       e.target.value = ''
     }
   }
