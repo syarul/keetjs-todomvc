@@ -13,7 +13,7 @@ class App extends Keet {
     super()
     this.todoModel.subscribe(model => {
       this.inform(model)
-      store(STORE_KEY, model)
+      // store(STORE_KEY, model)
     })
   }
   activeClass (obj) {

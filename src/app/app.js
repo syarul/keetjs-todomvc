@@ -28,8 +28,8 @@ class App extends Keet {
   }
 
   componentDidMount () {
-    const data = store(STORE_KEY)
-    data.map(obj => this.todoList.todoModel.add(obj))
+    // const data = store(STORE_KEY)
+    // data.map(obj => this.todoList.todoModel.add(obj))
   }
 
   create (e) {
