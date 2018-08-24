@@ -1,7 +1,10 @@
 # Keet.js TodoMVC Example
 
-Minimalist view layer for the web. For more info visit 
-https://github.com/syarul/keet
+[![Build Status](https://travis-ci.org/syarul/cypress-example-todomvc.svg?branch=master)](https://travis-ci.org/syarul/cypress-example-todomvc)
+
+This the implementation of TodoMVC using [keet](https://github.com/syarul/keet). 
+
+> This TodoMVC is may serve as as an ***option*** of building application with Keet.js.
 
 ## Setup
 
@@ -31,12 +34,10 @@ _( Results from Chrome v64 on Window 7 - AMD FX6100 - Radeon HD 7900 - )_
 
 ## Test Unit
 
-To run the todomvc test you need to copy this into the ```example``` tree folder of the offical todomvc at [github](https://github.com/tastejs/todomvc)
+To run the todomvc test, clone https://github.com/syarul/cypress-example-todomvc
 
-Name the folder into ```keetjs```, and follow the guide on how to setup the test.
+```npm install && npm start```
 
-## Resources
+on different console run:-
 
-The [Keet.js at Github](https://github.com/syarul/keet) is a great resource for getting started.
-
-_This TodoMVC is may serve as as a way of building application with Keet.js._
+```npm run cypress:run```
