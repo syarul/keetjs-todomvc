@@ -1,6 +1,6 @@
-import { createModel } from '../../keet'
+import { CreateModel } from '../../keet'
 
-class CreateModel extends createModel {
+class TodoModel extends CreateModel {
   clearCompleted () {
     this.list = this.list.filter(todo => !todo.completed)
   }
@@ -9,6 +9,6 @@ class CreateModel extends createModel {
   }
 }
 
-const todoModel = new CreateModel('filter')
+const todoModel = new TodoModel('filter')
 
 export default todoModel

@@ -1,7 +1,7 @@
 import { camelCase } from './util'
-import { createModel } from '../../keet'
+import { CreateModel } from '../../keet'
 
-class CreateFilterModel extends createModel {
+class FilterModel extends CreateModel {
   switch (hash, obj) {
     this.list = this.list.map(filter =>
       filter.hash === hash ? ({ ...filter, ...obj }) : ({ ...filter, selected: false })
@@ -9,7 +9,7 @@ class CreateFilterModel extends createModel {
   }
 }
 
-const filterModel = new CreateFilterModel()
+const filterModel = new FilterModel()
 
 Array.from(['all', 'active', 'completed']).map(page =>
   filterModel.add({
