@@ -1,4 +1,4 @@
-import Keet, { html } from '../../keet'
+import Keet, { html } from 'keet'
 import todoModel from './todo-model'
 import { store } from './util'
 

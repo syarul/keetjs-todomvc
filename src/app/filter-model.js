@@ -1,5 +1,5 @@
 import { camelCase } from './util'
-import { CreateModel } from '../../keet'
+import { CreateModel } from 'keet'
 
 class FilterModel extends CreateModel {
   switch (hash, obj) {
