@@ -1,4 +1,3 @@
-import { camelCase } from './util'
 import { CreateModel } from 'keet'
 
 class FilterModel extends CreateModel {
@@ -9,14 +8,4 @@ class FilterModel extends CreateModel {
   }
 }
 
-const filterModel = new FilterModel()
-
-Array.from(['all', 'active', 'completed']).map(page =>
-  filterModel.add({
-    hash: `#/${page}`,
-    name: camelCase(page),
-    selected: false
-  })
-)
-
-export default filterModel
+export default FilterModel

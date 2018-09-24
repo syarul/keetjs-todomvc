@@ -9,6 +9,7 @@ module.exports = {
     fs: 'empty'
   },
   entry: [
+    'babel-polyfill',
     './src/app/app.js'
   ],
   output: {

@@ -5,6 +5,7 @@ import babel from 'rollup-plugin-babel'
 export default {
 	input: 'src/app/app.js',
 	output: {
+		name: 'app',
 		file: 'build/app.js',
 		format: 'iife',
 		sourcemap: true
@@ -18,7 +19,8 @@ export default {
 				'stage-0'
 			],
 			plugins: [
-				'external-helpers'
+				'external-helpers',
+				'transform-decorators-legacy'
 			]
 		}),
 		nodeResolve(),
