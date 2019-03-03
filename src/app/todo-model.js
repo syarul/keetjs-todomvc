@@ -1,4 +1,4 @@
-import { CreateModel } from 'keet'
+import { CreateModel } from '../../keet/keet'
 
 class TodoModel extends CreateModel {
   clearCompleted () {

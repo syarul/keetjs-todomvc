@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime'
-import Keet, { html } from 'keet'
+import Keet, { html } from '../../keet/keet'
 import todoList, { todoModel } from './todo'
 import { store } from './util'
 import './filter'

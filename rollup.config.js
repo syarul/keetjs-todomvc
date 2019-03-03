@@ -3,7 +3,7 @@ import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
 
 export default {
-	input: 'src/app/app.js',
+	input: 'src2/index.js',
 	output: {
 		name: 'app',
 		file: 'build/app.js',
@@ -20,7 +20,14 @@ export default {
 			],
 			plugins: [
 				'external-helpers',
-				'transform-decorators-legacy'
+				'transform-decorators-legacy',
+				"transform-object-rest-spread",
+				[
+			        "transform-jsx",
+			        {
+			          "useVariables": true
+			        }
+			     ]
 			]
 		}),
 		nodeResolve(),

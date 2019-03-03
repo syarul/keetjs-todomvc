@@ -1,4 +1,4 @@
-import Keet, { html, childLike } from 'keet'
+import Keet, { html, childLike } from '../../keet/keet'
 import FilterModel from './filter-model'
 import todoList from './todo'
 import { camelCase } from './util'

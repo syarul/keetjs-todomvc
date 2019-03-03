@@ -1,4 +1,4 @@
-import { CreateModel } from 'keet'
+import { CreateModel } from '../../keet/keet'
 
 class FilterModel extends CreateModel {
   switch (hash, obj) {

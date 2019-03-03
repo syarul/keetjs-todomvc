@@ -1,4 +1,4 @@
-import Keet, { html, childLike } from 'keet'
+import Keet, { html, childLike } from '../../keet/keet'
 import TodoModel from './todo-model'
 
 const ENTER_KEY = 13

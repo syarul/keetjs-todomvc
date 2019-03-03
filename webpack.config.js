@@ -10,7 +10,7 @@ module.exports = {
   },
   entry: [
     'babel-polyfill',
-    './src/app/app.js'
+    './src2/index.js'
   ],
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -27,7 +27,10 @@ module.exports = {
   },
   resolve: {
     modules: ['node_modules'],
-    extensions: ['*', '.js', '.styl']
+    extensions: ['*', '.js'],
+    alias: {
+      keet: path.resolve(__dirname, './keet-meta')
+    }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
