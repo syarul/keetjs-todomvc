@@ -1,7 +1,19 @@
 import { Component } from 'keet';
 import { pluralize } from './util';
-
+//{ completedCount > 0 ? (
+//					<button class="clear-completed" onClick={onClearCompleted}>
+//						Clear completed
+//					</button>
+//				) : null }
 export default class TodoFooter extends Component {
+	clear () {
+		let a = this.props.completedCount > 0 ? (<button class="clear-completed" onClick={this.props.onClearCompleted}>
+					Clear completed
+				</button>
+			) : null
+		console.log(a)
+		return a
+	}
 	render() {
 		
 		const {
@@ -10,7 +22,7 @@ export default class TodoFooter extends Component {
 			completedCount,
 			onClearCompleted 
 		} = this.props	
-
+		console.log(completedCount, completedCount > 0)
 		return (
 			<footer class="footer">
 				<span class="todo-count">
@@ -27,11 +39,7 @@ export default class TodoFooter extends Component {
 						<a href="#/completed" class={nowShowing=='completed' && 'selected'}>Completed</a>
 					</li>
 				</ul>
-				{ completedCount > 0 && (
-					<button class="clear-completed" onClick={onClearCompleted}>
-						Clear completed
-					</button>
-				) }
+				{ this.clear.call(this) }
 			</footer>
 		);
 	}

@@ -52,14 +52,12 @@ export default class TodoItem extends Component {
 
 		const {
 			todo,
-			onToggle,
-			onDestroy,
 			editing,
 			key,
 		} = this.props
 		const { title, completed } = todo
 		const editText = this.state.editText
-		// console.log(todo)
+
 		return (
 			<li key={key} class={{ completed, editing }}>
 				<div class="view">

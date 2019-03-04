@@ -29,7 +29,7 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['*', '.js'],
     alias: {
-      keet: path.resolve(__dirname, './keet-meta')
+      keet: path.resolve(__dirname, './keet')
     }
   },
   plugins: [
