@@ -10,7 +10,7 @@ module.exports = {
   },
   entry: [
     'babel-polyfill',
-    './src2/index.js'
+    './src3/index.js'
   ],
   output: {
     path: path.resolve(__dirname, './dist'),

@@ -50,7 +50,12 @@
       "transform-class-properties",
       "transform-object-rest-spread",
       "transform-decorators-legacy",
-      ["transform-react-jsx", { "pragma": "v" }]
+      [
+        "transform-react-jsx",
+        {
+          "pragma": "v"
+        }
+      ]
     ]
   },
   "babel": {
@@ -73,6 +78,6 @@
     "parser": "babel-eslint"
   },
   "dependencies": {
-    "keet": "file:./keet-meta"
+    "keet": "file:./keet"
   }
 }
