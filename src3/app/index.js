@@ -34,7 +34,7 @@ export default class App extends Component {
 		let val = this.state.newTodo.trim();
 		if (val) {
 			this.model.addTodo(val);
-			this.setState({ newTodo: '' });
+			this.setState({ newTodo: "" });
 		}
 	};
 
@@ -68,16 +68,18 @@ export default class App extends Component {
 		this.model.clearCompleted();
 	};
 
-	linkState = () => {
-
+	linkState = e => {
+		this.setState({ newTodo: e.target.value});
 	};
 
-	render({ }, { nowShowing=ALL_TODOS, newTodo, editing }) {
-		console.log(this)
+	render({ }, { nowShowing=ALL_TODOS, newTodo="", editing }) {
+		
 		let { todos } = this.model,
 			shownTodos = todos.filter( FILTERS[nowShowing] ),
 			activeTodoCount = todos.reduce( (a, todo) => a + (todo.completed ? 0 : 1), 0),
 			completedCount = todos.length - activeTodoCount;
+
+		// console.log(todos)
 
 		return (
 			<div>
@@ -88,7 +90,7 @@ export default class App extends Component {
 						placeholder="What needs to be done?"
 						value={newTodo}
 						onKeyDown={this.handleNewTodoKeyDown}
-						onInput={this.linkState('newTodo')}
+						onInput={this.linkState}
 						autoFocus={true}
 					/>
 				</header>

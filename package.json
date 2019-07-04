@@ -67,7 +67,7 @@
       "transform-object-rest-spread",
       "transform-decorators-legacy",
       [
-        "transform-jsx",
+        "./keet/babel-plugin-transform-jsx",
         {
           "useVariables": true
         }

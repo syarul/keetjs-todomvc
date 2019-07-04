@@ -43,14 +43,6 @@ export default class TodoItem extends Component {
 		this.props.onDestroy(this.props.todo);
 	};
 
-	// shouldComponentUpdate({ todo, editing, editText }) {
-	// 	return (
-	// 		todo !== this.props.todo ||
-	// 		editing !== this.props.editing ||
-	// 		editText !== this.state.editText
-	// 	);
-	// }
-
 	componentDidUpdate() {
 		let node = this.base && this.base.querySelector('.edit');
 		if (node) node.focus();
